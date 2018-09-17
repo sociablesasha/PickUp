@@ -145,7 +145,7 @@ public class SwaggerConfig {
 Column | Datatype | PK | NN | UQ | UN | AI | Default
 --- | --- | --- | --- | --- | --- | --- | ---
 id | VARCHAR(16) | Yes | Yes | Yes |  |  |
-name | VARCHAR(70) |  | Yes | Yes |  |  |
+name | VARCHAR(70) |  | Yes |  |  |  |
 phone | VARCHAR(15) |  | Yes |  |  |  |
 email | VARCHAR(255) |  | Yes |  |  |  |
 photo | LONGBLOB |  | Yes |  |  |  |
