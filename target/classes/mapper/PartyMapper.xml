@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.phantom.pickup.mapper.PartyMapper">
+
+    <insert id="createParty" parameterType="Map">
+        INSERT INTO `party`
+        (
+            `status`,
+            `departure`,
+            `destination`,
+            `date`,
+            `time`,
+            `recruit`,
+            `attend`,
+            `title`,
+            `content`
+        )
+        VALUES
+        (
+            '모집중',
+            #{partyModel.departure},
+            #{partyModel.destination},
+            #{partyModel.date},
+            #{partyModel.time},
+            #{partyModel.recruit},
+            #{partyModel.attend},
+            #{partyModel.title},
+            #{partyModel.content}
+        )
+        <selectKey keyProperty="index" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
+
+    <select id="getParties" resultType="Map">
+        SELECT
+            `index`, `status`, `departure`, `destination`, `date`, `time`, `recruit`, `attend`, `title`
+        FROM `party`
+    </select>
+
+    <select id="getParty" resultType="Map" parameterType="Map">
+        SELECT
+            `index`, `status`, `departure`, `destination`, `date`, `time`, `recruit`, `attend`, `title`, `content`
+        FROM `party`
+        WHERE
+            `index` = #{index}
+    </select>
+
+    <select id="getMembers" resultType="Map" parameterType="Map">
+        SELECT
+            `log`.`status`, `user`.`id`, `user`.`name`, `user`.`phone`, `user`.`email`
+        FROM `log`
+        JOIN `user` ON `log`.`user` = `user`.`id`
+        WHERE
+	        `log`.`party` = #{index}
+    </select>
+
+    <update id="attendParty" parameterType="Map">
+        UPDATE `party` SET
+            `attend` = `attend` + 1
+        WHERE
+            `index` = #{index}
+    </update>
+
+    <update id="defyParty" parameterType="Map">
+        UPDATE `party` SET
+            `attend` = `attend` - 1
+        WHERE
+            `index` = #{index}
+    </update>
+
+</mapper>
